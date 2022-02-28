@@ -33,4 +33,30 @@ createMessage = async (req, res, next) => {
   }
 };
 
-module.exports.MessageController = { getAllOrOne, createMessage };
+updateMessage = async (req, res, next) => {
+  const { _id, userId, content } = req.body;
+
+  try {
+    const message = await Message.findById(_id);
+    if (!message)
+      res.status(404).json({ success: false, msg: "no such message" });
+
+    // check if message belong to this user
+    if (message.userId !== userId)
+      res.status(401).json({ success: false, msg: "Unauthorized" });
+
+    message.content = content || message.content;
+
+    const updatedMessage = await message.save();
+
+    res.json({ success: true, updatedMessage });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.MessageController = {
+  getAllOrOne,
+  createMessage,
+  updateMessage,
+};
