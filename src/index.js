@@ -5,6 +5,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+const userRouter = require("./router/user.router");
+
 // -------- instantiate server & DB connection -----------------------
 const app = express();
 mongoose.connect(process.env.DB_URL, () => {
@@ -21,6 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // -------- Routers ----------------------------------
+app.use(userRouter);
 
 // Not Found route
 app.use((req, res) => {
