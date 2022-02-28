@@ -4,10 +4,12 @@ getAllOrOne = async (req, res, next) => {
   try {
     // check param id sent
     if (req.params.id) {
-      const message = await Message.findById(req.params.id);
+      const message = await Message.findById(req.params.id).populate({
+        path: "userId",
+      });
       res.status(200).json({ success: true, message });
     } else {
-      const messages = await Message.find();
+      const messages = await Message.find().populate({ path: "userId" });
       res.status(200).json({ success: true, messages });
     }
   } catch (err) {
