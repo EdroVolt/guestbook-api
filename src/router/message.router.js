@@ -7,6 +7,7 @@ messageRouter
   .route("/messages/:id?")
   .get(MessageController.getAllOrOne)
   .post(MessageController.createMessage)
-  .put(MessageController.updateMessage);
+  .put(MessageController.updateMessage)
+  .delete(MessageController.deleteMessage);
 
 module.exports = messageRouter;

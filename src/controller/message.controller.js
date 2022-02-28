@@ -52,8 +52,19 @@ updateMessage = async (req, res, next) => {
   }
 };
 
+deleteMessage = async (req, res, next) => {
+  const { _id } = req.body;
+  try {
+    const message = await Message.deleteOne({ _id });
+    res.send({ success: true });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports.MessageController = {
   getAllOrOne,
   createMessage,
   updateMessage,
+  deleteMessage,
 };
