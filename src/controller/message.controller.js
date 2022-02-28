@@ -7,7 +7,7 @@ getAllOrOne = async (req, res, next) => {
       const message = await Message.findById(req.params.id);
       res.status(200).json({ success: true, message });
     } else {
-      const messages = await message.find();
+      const messages = await Message.find();
       res.status(200).json({ success: true, messages });
     }
   } catch (err) {
