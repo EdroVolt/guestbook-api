@@ -38,17 +38,14 @@ updateMessage = async (req, res, next) => {
 
   try {
     const message = await Message.findById(_id);
-    if (!message)
-      res.status(404).json({ success: false, msg: "no such message" });
+    if (!message) throw new Error("no such message");
 
-    // check if message belong to this user
-    if (message.userId !== userId)
-      res.status(401).json({ success: false, msg: "Unauthorized" });
+    // check if message belongs to this user
+    if (message.userId != userId) throw new Error("Unauthorized");
 
     message.content = content || message.content;
-
+    // save updated message
     const updatedMessage = await message.save();
-
     res.json({ success: true, updatedMessage });
   } catch (err) {
     next(err);
