@@ -10,4 +10,7 @@ messageRouter
   .put(MessageController.updateMessage)
   .delete(MessageController.deleteMessage);
 
+// replys
+messageRouter.post("/messages/:id/replys", MessageController.replyOnMessage);
+
 module.exports = messageRouter;

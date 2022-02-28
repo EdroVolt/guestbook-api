@@ -62,9 +62,29 @@ deleteMessage = async (req, res, next) => {
   }
 };
 
+replyOnMessage = async (req, res, next) => {
+  const { userId, content = "" } = req.body;
+
+  try {
+    const message = await Message.findById(req.params.id);
+    if (!message) throw new Error("no such message");
+
+    message.replys.push({
+      content,
+      userId,
+    });
+    // save updated message
+    const updatedMessage = await message.save();
+    res.json({ success: true, updatedMessage });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports.MessageController = {
   getAllOrOne,
   createMessage,
   updateMessage,
   deleteMessage,
+  replyOnMessage,
 };
