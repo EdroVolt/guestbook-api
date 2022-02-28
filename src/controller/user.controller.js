@@ -15,4 +15,21 @@ getAllOrOne = async (req, res, next) => {
   }
 };
 
-module.exports.UserController = { getAllOrOne };
+createUser = async (req, res, next) => {
+  let { name, password, email } = req.body;
+
+  try {
+    let newUser = new User({
+      name,
+      password,
+      email,
+    });
+    // save created user in DB
+    const user = await newUser.save();
+    res.json({ success: true, user });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.UserController = { getAllOrOne, createUser };
