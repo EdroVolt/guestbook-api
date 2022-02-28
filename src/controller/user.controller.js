@@ -1,6 +1,6 @@
 const User = require("../model/user.model");
 
-module.exports.getAllOrOne = async (req, res, next) => {
+getAllOrOne = async (req, res, next) => {
   try {
     // check param id sent
     if (req.params.id) {
