@@ -3,6 +3,9 @@ const { MessageController } = require("../controller/message.controller");
 
 const messageRouter = express.Router();
 
-messageRouter.route("/messages/:id?").get(MessageController.getAllOrOne);
+messageRouter
+  .route("/messages/:id?")
+  .get(MessageController.getAllOrOne)
+  .post(MessageController.createMessage);
 
 module.exports = messageRouter;

@@ -15,4 +15,20 @@ getAllOrOne = async (req, res, next) => {
   }
 };
 
-module.exports.MessageController = { getAllOrOne };
+createMessage = async (req, res, next) => {
+  let { content, userId } = req.body;
+
+  try {
+    let newMessage = new Message({
+      content,
+      userId,
+    });
+    // save created message in DB
+    const message = await newMessage.save();
+    res.json({ success: true, message });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.MessageController = { getAllOrOne, createMessage };
