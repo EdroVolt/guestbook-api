@@ -1,9 +1,11 @@
 var jwt = require("jsonwebtoken");
+const User = require("../model/user.model");
+const { isRegisterd } = require("../utils/helper.util");
 const { UserController } = require("./user.controller");
 
 handelLogin = async (req, res, next) => {
   const { email, password } = req.body;
-  if (await isRegisterd(Student, email, password)) {
+  if (await isRegisterd(User, email, password)) {
     let token = jwt.sign(
       {
         email: email,
