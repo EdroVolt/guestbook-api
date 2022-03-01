@@ -13,7 +13,15 @@ isValidPassword = (password) => {
   return false;
 };
 
+isValidName = (name) => {
+  if (name && name.length >= 3 && isNaN(name)) {
+    return true;
+  }
+  return false;
+};
+
 module.exports.Validator = {
   isValidEmail,
   isValidPassword,
+  isValidName
 };
