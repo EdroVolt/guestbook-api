@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 const userRouter = require("./router/user.router");
 const messageRouter = require("./router/message.router");
+const { isAuth } = require("./middlewares/auth.mw");
 
 // -------- instantiate server & DB connection -----------------------
 const app = express();
@@ -24,8 +25,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // -------- Routers ----------------------------------
-app.use(userRouter);
-app.use(messageRouter);
+app.use(isAuth, userRouter);
+app.use(isAuth, messageRouter);
 
 // Not Found route
 app.use((req, res) => {
