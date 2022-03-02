@@ -7,10 +7,25 @@ getAllOrOne = async (req, res, next) => {
       const message = await Message.findById(req.params.id).populate({
         path: "userId",
       });
-      res.status(200).json({ success: true, message });
+
+      const formattedMessage = {
+        _id: message._id,
+        name: message.userId.name,
+        content: message.content,
+        replys: message.replys,
+      };
+      res.status(200).json({ success: true, message: formattedMessage });
     } else {
       const messages = await Message.find().populate({ path: "userId" });
-      res.status(200).json({ success: true, messages });
+      const formattedMessages = messages.map((message) => {
+        return {
+          _id: message._id,
+          name: message.userId.name,
+          content: message.content,
+          replys: message.replys,
+        };
+      });
+      res.status(200).json({ success: true, messages: formattedMessages });
     }
   } catch (err) {
     next(err);
